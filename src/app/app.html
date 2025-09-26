@@ -1,2 +1,19 @@
-<h1>Name : {{name}}</h1>
-<h1>Course : {{coursename}}</h1>
+<div id="sentinel-proof">
+  <h1>{{ title }}</h1>
+
+  <div *ngFor="let product of products" class="card">
+    <h2>{{ product.name }}</h2>
+    <p>Category: {{ product.category }}</p>
+    <p>Price: ${{ product.price }}</p>
+
+    <div *ngIf="product.inStock; else outOfStock">
+      <span class="badge available">In Stock</span>
+    </div>
+
+    <ng-template #outOfStock>
+      <span class="badge not-available">Out of Stock</span>
+    </ng-template>
+
+    <p *ngIf="product.description">Details: {{ product.description }}</p>
+  </div>
+</div>
