@@ -1,5 +1,7 @@
-<div *ngFor="let product of product; let i = index">
-  <app-product-list-item [product]="product"></app-product-list-item>
+<div class="product-item" [class.even]="product.id % 2 === 0" [class.odd]="product.id % 2 !== 0">
+  <h2>{{ product.name }}</h2>
+  <p>Category: {{ product.category }}</p>
+  <p>Price: ${{ product.price }}</p>
 </div>
 
 

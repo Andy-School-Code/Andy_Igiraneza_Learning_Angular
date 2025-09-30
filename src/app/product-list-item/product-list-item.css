@@ -3,3 +3,11 @@
   padding: 12px;
   margin-bottom: 8px;
 }
+
+.product-item.even {
+  background-color: pink;
+}
+
+.product-item.odd {
+  background-color: teal;
+}

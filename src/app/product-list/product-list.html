@@ -1,6 +1,4 @@
-<p>product-list works!</p>
-<app-product-list-item [product]="products[0]"></app-product-list-item>
-<app-product-list-item [product]="products[1]"></app-product-list-item>
-<app-product-list-item [product]="products[2]"></app-product-list-item>
-<app-product-list-item [product]="products[3]"></app-product-list-item>
+<div *ngFor="let product of products; let i = index">
+  <app-product-list-item [product]="product"></app-product-list-item>
+</div>
 

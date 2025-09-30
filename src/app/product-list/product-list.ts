@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
 import {Product} from '../models/product';
+import {ProductListItem} from '../product-list-item/product-list-item';
+import {NgForOf} from '@angular/common';
 
 @Component({
   selector: 'app-product-list',
-  imports: [],
+  imports: [ProductListItem, NgForOf],
   templateUrl: './product-list.html',
   styleUrl: './product-list.css'
 })
