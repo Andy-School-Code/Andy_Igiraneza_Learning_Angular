@@ -1,4 +1,5 @@
 <div id="sentinel-proof">
   <h1>{{ title }}</h1>
+  <app-product-list-item *ngIf="featured" [product]="featured"></app-product-list-item>
   <app-product-list></app-product-list>
 </div>
