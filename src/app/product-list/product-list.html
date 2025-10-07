@@ -1,3 +1,6 @@
 <div *ngFor="let product of products">
-  <app-product-list-item [product]="product"></app-product-list-item>
+  <app-product-list-item
+    [product]="product"
+    (click)="onSelect(product.id)">
+  </app-product-list-item>
 </div>

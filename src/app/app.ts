@@ -10,14 +10,13 @@ import {ProductListItem} from './product-list-item/product-list-item';
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
-export class App implements OnInit {
+export class App {
   title: string = 'Assignment 4';
   featured?: Product;
 
   constructor(private productSvc: ProductService) {}
 
-  ngOnInit(): void {
-    // pick any existing id (e.g., 2)
-    this.productSvc.read(2).subscribe(item => (this.featured = item));
+  loadFeatured(id: number) {
+    this.productSvc.read(id).subscribe(item => (this.featured = item));
   }
 }
