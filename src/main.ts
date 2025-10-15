@@ -1,6 +1,20 @@
 import { bootstrapApplication } from '@angular/platform-browser';
-import { appConfig } from './app/app.config';
-import { App } from './app/app';
+import { provideRouter, Routes } from '@angular/router';
+import { AppComponent } from './app/app.component';
+import { StudentListComponent } from './app/student-list/student-list.component';
+import { StudentDetailComponent } from './app/student-detail/student-detail.component';
+import { ModifyStudentComponent } from './app/modify-student/modify-student.component';
+import { PageNotFoundComponent } from './app/page-not-found/page-not-found.component';
 
-bootstrapApplication(App, appConfig)
-  .catch((err) => console.error(err));
+
+const routes: Routes = [
+  { path: '', redirectTo: '/students', pathMatch: 'full' },
+  { path: 'students', component: StudentListComponent },
+  { path: 'students/:id', component: StudentDetailComponent },
+  { path: 'modify-student', component: ModifyStudentComponent },
+  { path: '**', component: PageNotFoundComponent },
+];
+
+bootstrapApplication(AppComponent, {
+  providers: [provideRouter(routes)]
+}).catch(err => console.error(err));
