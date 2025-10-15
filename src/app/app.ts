@@ -3,11 +3,11 @@ import {Product} from './models/product';
 import { ProductList } from './product-list/product-list';
 import {ProductService} from './services/product.service';
 import {ProductListItem} from './product-list-item/product-list-item';
-import {RouterOutlet} from '@angular/router';
+import {RouterLink, RouterLinkActive, RouterOutlet} from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  imports: [ProductList, ProductListItem, RouterOutlet],
+  imports: [ProductList, ProductListItem, RouterOutlet, RouterLink, RouterLinkActive],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

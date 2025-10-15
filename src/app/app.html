@@ -1,5 +1,6 @@
 <div class="nav-bar">
   <nav>
+    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
     <a routerLink="/modify" routerLinkActive="active">Modify List Item</a>
   </nav>
 </div>
@@ -9,7 +10,6 @@
   <router-outlet></router-outlet>
 
   <div id="sentinel-proof">
-    <h1>{{ title }}</h1>
     <app-product-list-item *ngIf="featured" [product]="featured!"></app-product-list-item>
     <app-product-list (itemSelected)="loadFeatured($event)"></app-product-list>
   </div>
