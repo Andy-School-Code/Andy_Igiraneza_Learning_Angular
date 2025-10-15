@@ -1,7 +1,22 @@
 <div id="sentinel-proof">
-  <h1>{{ title }}</h1>
-  <app-product-list-item *ngIf="featured" [product]="featured!"></app-product-list-item>
-  <app-product-list (itemSelected)="loadFeatured($event)"></app-product-list>
-  <textarea>This is Required to be here</textarea>
+  <div class="nav-bar">
+    <nav>
+      <a routerLink="/students" routerLinkActive="active">Student List</a>
+      <a routerLink="/modify-student" routerLinkActive="active">Modify Student</a>
+    </nav>
+  </div>
 
+  <div class="app-container">
+    <h1>{{ title }}</h1>
+
+    <section *ngIf="featured">
+      <app-product-list-item [product]="featured"></app-product-list-item>
+    </section>
+
+    <app-product-list (itemSelected)="loadFeatured($event)"></app-product-list>
+
+    <router-outlet></router-outlet>
+  </div>
+
+  <textarea>This is Required to be here</textarea>
 </div>

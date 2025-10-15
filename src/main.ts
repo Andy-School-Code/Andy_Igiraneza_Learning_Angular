@@ -1,20 +1,20 @@
 import { bootstrapApplication } from '@angular/platform-browser';
 import { provideRouter, Routes } from '@angular/router';
-import { AppComponent } from './app/app.component';
-import { StudentListComponent } from './app/student-list/student-list.component';
-import { StudentDetailComponent } from './app/student-detail/student-detail.component';
-import { ModifyStudentComponent } from './app/modify-student/modify-student.component';
-import { PageNotFoundComponent } from './app/page-not-found/page-not-found.component';
+import { App } from './app/app';
+import { StudentList } from './app/student-list/student-list';
+import { StudentDetail } from './app/student-detail/student-detail';
+import { ModifyStudent } from './app/modify-student/modify-student';
+import { PageNotFound } from './app/page-not-found/page-not-found';
 
 
 const routes: Routes = [
   { path: '', redirectTo: '/students', pathMatch: 'full' },
-  { path: 'students', component: StudentListComponent },
-  { path: 'students/:id', component: StudentDetailComponent },
-  { path: 'modify-student', component: ModifyStudentComponent },
-  { path: '**', component: PageNotFoundComponent },
+  { path: 'students', component: StudentList },
+  { path: 'students/:id', component: StudentDetail },
+  { path: 'modify-student', component: ModifyStudent },
+  { path: '**', component: PageNotFound },
 ];
 
-bootstrapApplication(AppComponent, {
+bootstrapApplication(App, {
   providers: [provideRouter(routes)]
 }).catch(err => console.error(err));
