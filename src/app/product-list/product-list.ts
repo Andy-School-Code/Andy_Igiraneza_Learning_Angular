@@ -3,6 +3,7 @@ import {Product} from '../models/product';
 import {ProductListItem} from '../product-list-item/product-list-item';
 import {NgForOf} from '@angular/common';
 import {ProductService} from '../services/product.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-product-list',
@@ -14,13 +15,19 @@ export class ProductList implements OnInit {
   @Output() itemSelected = new EventEmitter<number>();
   products: Product[] = [];
 
-  constructor(private productSvc: ProductService) {}
+  constructor(private productService: ProductService, private router: Router) {}
 
   ngOnInit(): void {
-    this.productSvc.getAll().subscribe(items => (this.products = items));
+    this.productService.getAll().subscribe(items => (this.products = items));
   }
 
-  onSelect(id: number) {
-    this.itemSelected.emit(id);
+  onEdit(id: number): void {
+    this.router.navigate(['/modify', id]); // takes user to modify form
+  }
+
+  onDelete(id: number): void {
+    this.productService.delete(id).subscribe(() => {
+      this.products = this.products.filter(p => p.id !== id);
+    })
   }
 }
