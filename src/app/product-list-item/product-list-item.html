@@ -9,13 +9,9 @@
   <p>Discounted Price: {{ product.price | discount:15 }}</p>
   <p>Added On: {{ product.addedOn | date:'longDate' }}</p>
 
-  <div *ngIf="product.inStock; else oos">
-    <span class="badge available">In Stock</span>
-  </div>
-
-  <ng-template #oos>
-    <span class="badge not-available">Out of Stock</span>
-  </ng-template>
+  <p [style.color]="product.inStock | stockColor">
+    {{ product.inStock ? 'In Stock' : 'Out of Stock' }}
+  </p>
 
   <img *ngIf="product.imageUrl"
        [src]="product.imageUrl"
