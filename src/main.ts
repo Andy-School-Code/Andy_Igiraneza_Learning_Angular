@@ -6,6 +6,7 @@ import { PageNotFound } from './app/page-not-found/page-not-found';
 
 const routes: Routes = [
   { path: 'modify', component: ModifyListItem },
+  { path: 'modify/:id', component: ModifyListItem },
   { path: '**', component: PageNotFound }
 ];
 

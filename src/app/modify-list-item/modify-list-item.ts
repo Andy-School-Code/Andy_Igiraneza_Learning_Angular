@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {ProductService} from '../services/product.service';
 import {Product} from '../models/product';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-modify-list-item',
@@ -14,7 +15,7 @@ import {Product} from '../models/product';
 export class ModifyListItem {
   form!: FormGroup;
 
-  constructor(private fb: FormBuilder, private productService: ProductService) {}
+  constructor(private fb: FormBuilder, private productService: ProductService, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.form = this.fb.group({
@@ -28,6 +29,14 @@ export class ModifyListItem {
     });
   }
 
+  const id = this.route.snapshot.paramMap.get('id');
+  if (id) {
+    this.productService.read(Number(id)).subscribe(product => {
+      if (product) {
+        this.form.patchValue(product);
+      }
+    });
+  }
   onSubmit(): void {
     if (this.form.invalid) return;
     const product: Product = this.form.value;
