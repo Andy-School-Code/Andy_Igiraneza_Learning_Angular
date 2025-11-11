@@ -1,37 +1,31 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { Product } from '../models/product';
-import { MOCK_PRODUCTS } from '../data/mock-content';
 
 @Injectable({ providedIn: 'root' })
 export class ProductService {
+  private apiUrl = 'api/products';
 
-  private products: Product[] = [...MOCK_PRODUCTS];
+  constructor(private http: HttpClient) {}
 
   getAll(): Observable<Product[]> {
-    return of(this.products);
+    return this.http.get<Product[]>(this.apiUrl);
   }
 
-  read(id: number): Observable<Product | undefined> {
-    return of(this.products.find(p => p.id === id));
+  read(id: number): Observable<Product> {
+    return this.http.get<Product>(`${this.apiUrl}/${id}`);
   }
 
-
-  create(item: Product): Observable<Product[]> {
-    this.products = [...this.products, item];
-    return of(this.products);
+  create(product: Product): Observable<Product> {
+    return this.http.post<Product>(this.apiUrl, product);
   }
 
-
-  update(item: Product): Observable<Product[]> {
-    this.products = this.products.map(p => (p.id === item.id ? { ...p, ...item } : p));
-    return of(this.products);
+  update(product: Product): Observable<Product> {
+    return this.http.put<Product>(`${this.apiUrl}/${product.id}`, product);
   }
 
-
-  delete(id: number): Observable<Product | undefined> {
-    const removed = this.products.find(p => p.id === id);
-    this.products = this.products.filter(p => p.id !== id);
-    return of(removed);
+  delete(id: number): Observable<{}> {
+    return this.http.delete(`${this.apiUrl}/${id}`);
   }
 }
