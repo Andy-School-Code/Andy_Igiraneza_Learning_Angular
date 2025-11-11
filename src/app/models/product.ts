@@ -6,4 +6,5 @@ export interface Product {
   inStock: boolean;
   description?: string;
   imageUrl?: string;
+  addedOn?: Date;
 }

@@ -1,10 +1,11 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Product} from '../models/product';
-import {NgIf} from '@angular/common';
+import {CurrencyPipe, DatePipe, NgIf, UpperCasePipe} from '@angular/common';
+import {DiscountPipe} from '../pipes/discount-pipe';
 
 @Component({
   selector: 'app-product-list-item',
-  imports: [NgIf],
+  imports: [NgIf, CurrencyPipe, UpperCasePipe, DatePipe, DiscountPipe],
   templateUrl: './product-list-item.html',
   styleUrl: './product-list-item.css'
 })

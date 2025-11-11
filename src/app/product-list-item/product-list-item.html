@@ -1,27 +1,29 @@
 <div class="product-item"
      (click)="onSelect()"
-[class.even]="product.id % 2 === 0"
-[class.odd]="product.id % 2 !== 0">
+     [class.even]="product.id % 2 === 0"
+     [class.odd]="product.id % 2 !== 0">
 
-<h2>{{ product.name }}</h2>
-<p>Category: {{ product.category }}</p>
-<p>Price: ${{ product.price }}</p>
+  <h2>{{ product.name }}</h2>
+  <p>Category: {{ product.category | uppercase }}</p>
+  <p>Price: {{ product.price | currency:'USD':'symbol' }}</p>
+  <p>Discounted Price: {{ product.price | discount:15 }}</p>
+  <p>Added On: {{ product.addedOn | date:'longDate' }}</p>
 
-<div *ngIf="product.inStock; else oos">
-  <span class="badge available">In Stock</span>
-</div>
+  <div *ngIf="product.inStock; else oos">
+    <span class="badge available">In Stock</span>
+  </div>
 
-<ng-template #oos>
-  <span class="badge not-available">Out of Stock</span>
-</ng-template>
+  <ng-template #oos>
+    <span class="badge not-available">Out of Stock</span>
+  </ng-template>
 
-<img *ngIf="product.imageUrl"
-     [src]="product.imageUrl"
-     class="product-image"
-     alt="{{ product.name }}">
+  <img *ngIf="product.imageUrl"
+       [src]="product.imageUrl"
+       class="product-image"
+       alt="{{ product.name }}">
 
-<p *ngIf="product.description">
-  Details: {{ product.description }}
-</p>
+  <p *ngIf="product.description">
+    Details: {{ product.description }}
+  </p>
 
 </div>
