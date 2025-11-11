@@ -1,3 +1,7 @@
+<div *ngIf="errorMessage" class="error-box">
+  {{ errorMessage }}
+</div>
+
 <div *ngFor="let product of products">
   <app-product-list-item [product]="product"></app-product-list-item>
   <button (click)="onEdit(product.id)">Edit</button>

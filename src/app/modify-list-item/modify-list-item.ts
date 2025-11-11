@@ -1,21 +1,25 @@
-import { Component } from '@angular/core';
-import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {ProductService} from '../services/product.service';
-import {Product} from '../models/product';
-import {ActivatedRoute} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ProductService } from '../services/product.service';
+import { Product } from '../models/product';
+import { ActivatedRoute } from '@angular/router';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-modify-list-item',
-  imports: [
-    ReactiveFormsModule
-  ],
+  imports: [ReactiveFormsModule, NgIf],
   templateUrl: './modify-list-item.html',
-  styleUrl: './modify-list-item.css'
+  styleUrls: ['./modify-list-item.css']
 })
-export class ModifyListItem {
+export class ModifyListItem implements OnInit {
   form!: FormGroup;
+  errorMessage = '';
 
-  constructor(private fb: FormBuilder, private productService: ProductService, private route: ActivatedRoute) {}
+  constructor(
+    private fb: FormBuilder,
+    private productService: ProductService,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
     this.form = this.fb.group({
@@ -27,27 +31,41 @@ export class ModifyListItem {
       description: [''],
       imageUrl: ['']
     });
+
+    const id = this.route.snapshot.paramMap.get('id');
+    if (id) {
+      this.productService.read(Number(id)).subscribe({
+        next: (product) => {
+          if (product) this.form.patchValue(product);
+        },
+        error: () => {
+          this.errorMessage = 'Failed to load product details.';
+        }
+      });
+    }
   }
 
-  const id = this.route.snapshot.paramMap.get('id');
-  if (id) {
-    this.productService.read(Number(id)).subscribe(product => {
-      if (product) {
-        this.form.patchValue(product);
-      }
-    });
-  }
   onSubmit(): void {
     if (this.form.invalid) return;
+
     const product: Product = this.form.value;
 
-    this.productService.read(product.id).subscribe(existing => {
-      if (existing) {
-        this.productService.update(product).subscribe(() => alert('Product updated!'));
-      } else {
-        this.productService.create(product).subscribe(() => alert('Product created!'));
-      }
-      this.form.reset();
+    this.productService.read(product.id).subscribe({
+      next: (existing) => {
+        if (existing) {
+          this.productService.update(product).subscribe({
+            next: () => alert('Product updated!'),
+            error: () => (this.errorMessage = 'Error updating product.')
+          });
+        } else {
+          this.productService.create(product).subscribe({
+            next: () => alert('Product created!'),
+            error: () => (this.errorMessage = 'Error creating product.')
+          });
+        }
+        this.form.reset();
+      },
+      error: () => (this.errorMessage = 'Error checking product existence.')
     });
   }
 
